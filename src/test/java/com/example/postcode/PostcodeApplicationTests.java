@@ -56,17 +56,17 @@ class PostcodeApplicationTests {
         PostcodeDTO postcodeDTO1 = new PostcodeDTO(2000L, "Sydney");
         PostcodeDTO postcodeDTO2 = new PostcodeDTO(2114L, "Ryde");
         ResponseEntity<?> responseEntity1 = new ResponseEntity<>(
-                "postcodeNames",
+                "[Ryde,Sydney]Total characrers: 13",
                 HttpStatus.OK
         );
         when(controller.savePostcodes(any(List.class), any(HttpServletRequest.class))).thenReturn(responseEntity1);
         ResponseEntity responseEntity2 = controller.savePostcodes(Arrays.asList(postcodeDTO1,postcodeDTO2),request);
-        Assertions.assertThat(responseEntity2.getStatusCode()).isEqualTo(200);
+        Assertions.assertThat(responseEntity2.getStatusCode().value()).isEqualTo(200);
 
         when(controller.getPostcodes(any(Long.class), any(Long.class))).thenReturn(responseEntity1);
         ResponseEntity responseEntity3 = controller.getPostcodes(1000L, 5000L);
-        Assertions.assertThat(responseEntity3.getStatusCode()).isEqualTo(200);
-        Assertions.assertThat(responseEntity3.getBody()).isEqualTo("Sydney");
+        Assertions.assertThat(responseEntity3.getStatusCode().value()).isEqualTo(200);
+        Assertions.assertThat(responseEntity3.getBody()).isEqualTo("[Ryde,Sydney]Total characrers: 13");
     }
 
 }
